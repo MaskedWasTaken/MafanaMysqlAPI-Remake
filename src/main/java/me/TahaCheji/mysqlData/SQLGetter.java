@@ -1,4 +1,7 @@
 package me.TahaCheji.mysqlData;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -117,6 +120,22 @@ public class SQLGetter {
         return 0;
     }
 
+    public List<Integer> getAllIntager(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+        List<Integer> x = new ArrayList<>();
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
+        ps.setString(1, uuid.toString());
+        ResultSet resultSet = ps.executeQuery();
+        try {
+            while (resultSet.next()) {
+                Integer xs = resultSet.getInt(mysqlValue.getName());
+                x.add(xs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return x;
+    }
+
     public void setString(MysqlValue mysqlValue) {
         try {
             if(!exists(mysqlValue.getMysqlUUID())) {
@@ -148,6 +167,22 @@ public class SQLGetter {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public List<String> getAllString(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+        List<String> x = new ArrayList<>();
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
+        ps.setString(1, uuid.toString());
+        ResultSet resultSet = ps.executeQuery();
+        try {
+            while (resultSet.next()) {
+                String xs = resultSet.getString(mysqlValue.getName());
+                x.add(xs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return x;
     }
 
     public void setDouble(MysqlValue mysqlValue) {
@@ -184,6 +219,22 @@ public class SQLGetter {
         return xp;
     }
 
+    public List<Double> getAllDouble(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+        List<Double> x = new ArrayList<>();
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
+        ps.setString(1, uuid.toString());
+        ResultSet resultSet = ps.executeQuery();
+        try {
+            while (resultSet.next()) {
+                Double xs = resultSet.getDouble(mysqlValue.getName());
+                x.add(xs);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return x;
+    }
+
     public void setUUID(MysqlValue mysqlValue) {
         try {
             if(!exists(mysqlValue.getMysqlUUID())) {
@@ -216,6 +267,72 @@ public class SQLGetter {
         }
         return xp;
     }
+
+    public List<UUID> getAllUUID(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+        List<UUID> players = new ArrayList<>();
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
+        ps.setString(1, uuid.toString());
+        ResultSet resultSet = ps.executeQuery();
+        try {
+            while (resultSet.next()) {
+                UUID playerUUID = UUID.fromString(resultSet.getString(mysqlValue.getName()));
+                players.add(playerUUID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return players;
+    }
+
+    public void setObject(MysqlValue mysqlValue) {
+        try {
+            if(!exists(mysqlValue.getMysqlUUID())) {
+                PreparedStatement ps2 = getMySQL().getConnection().prepareStatement("INSERT IGNORE INTO " + tableString + " (" + mysqlValue.getName() + ",UUID) VALUES (?,?)");
+                ps2.setString(1, mysqlValue.getUuidValue().toString());
+                ps2.setObject(2, mysqlValue.getObjectValue());
+                ps2.executeUpdate();
+            } else {
+                PreparedStatement ps = getMySQL().getConnection().prepareStatement("UPDATE " + tableString + " SET " + mysqlValue.getName() + "=? " + "WHERE UUID=?");
+                ps.setString(1, mysqlValue.getUuidValue().toString());
+                ps.setObject(2, mysqlValue.getObjectValue());
+                ps.executeUpdate();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public Object getObject(UUID uuid, MysqlValue mysqlValue) {
+        Object xp;
+        try {
+            PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
+            ps.setString(1, uuid.toString());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                xp = rs.getObject(mysqlValue.getName());
+                return xp;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Object> getAllObject(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+        List<Object> x = new ArrayList<>();
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
+        ps.setString(1, uuid.toString());
+        ResultSet resultSet = ps.executeQuery();
+        try {
+            while (resultSet.next()) {
+                Object playerUUID = resultSet.getObject(mysqlValue.getName());
+                x.add(playerUUID);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return x;
+    }
+
 
 
     public MySQL getMySQL() {

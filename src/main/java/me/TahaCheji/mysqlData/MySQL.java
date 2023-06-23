@@ -27,7 +27,6 @@ public class MySQL {
 
     static ConsoleCommandSender console = Bukkit.getConsoleSender();
 
-    // connect
     public void connect() {
         if (!isConnected()) {
             try {
@@ -39,7 +38,6 @@ public class MySQL {
         }
     }
 
-    // disconnect
     public void disconnect() {
         if (isConnected()) {
             try {
@@ -51,12 +49,10 @@ public class MySQL {
         }
     }
 
-    // isConnected
     public boolean isConnected() {
         return (con == null ? false : true);
     }
 
-    // getConnection
     public Connection getConnection() {
         return con;
     }
