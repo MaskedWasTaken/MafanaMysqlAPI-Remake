@@ -169,10 +169,9 @@ public class SQLGetter {
         return "";
     }
 
-    public List<String> getAllString(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+    public List<String> getAllString(MysqlValue mysqlValue) throws SQLException {
         List<String> x = new ArrayList<>();
-        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
-        ps.setString(1, uuid.toString());
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString);
         ResultSet resultSet = ps.executeQuery();
         try {
             while (resultSet.next()) {
@@ -219,10 +218,9 @@ public class SQLGetter {
         return xp;
     }
 
-    public List<Double> getAllDouble(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+    public List<Double> getAllDouble(MysqlValue mysqlValue) throws SQLException {
         List<Double> x = new ArrayList<>();
-        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
-        ps.setString(1, uuid.toString());
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString);
         ResultSet resultSet = ps.executeQuery();
         try {
             while (resultSet.next()) {
@@ -268,10 +266,9 @@ public class SQLGetter {
         return xp;
     }
 
-    public List<UUID> getAllUUID(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+    public List<UUID> getAllUUID(MysqlValue mysqlValue) throws SQLException {
         List<UUID> players = new ArrayList<>();
-        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
-        ps.setString(1, uuid.toString());
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString);
         ResultSet resultSet = ps.executeQuery();
         try {
             while (resultSet.next()) {
@@ -317,10 +314,9 @@ public class SQLGetter {
         return null;
     }
 
-    public List<Object> getAllObject(UUID uuid, MysqlValue mysqlValue) throws SQLException {
+    public List<Object> getAllObject(MysqlValue mysqlValue) throws SQLException {
         List<Object> x = new ArrayList<>();
-        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString + " WHERE UUID=?");
-        ps.setString(1, uuid.toString());
+        PreparedStatement ps = getMySQL().getConnection().prepareStatement("SELECT " + mysqlValue.getName() + " FROM " + tableString);
         ResultSet resultSet = ps.executeQuery();
         try {
             while (resultSet.next()) {
